@@ -34,7 +34,7 @@ const Carosel = () => {
       modules={[Pagination, Autoplay, Navigation]}
       pagination={{ clickable: true }}
       navigation
-      autoplay={{ delay: 1000, disableOnInteraction: false }}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
       loop
       slidesPerView={1}
     >
