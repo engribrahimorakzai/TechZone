@@ -1,16 +1,54 @@
-# React + Vite
+TechZone
+TechZone is a small online store for electronics that I built with React. You can browse products, search and filter them, open a product page, and add items to your cart.
+I made this project to practice React and to learn how a real shopping site works.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+What it can do
+Home page with a sliding banner
+Browse products by category
+Search, and filter by category, brand and price
+Pagination (8 products per page)
+Product page with image gallery and quantity picker
+Cart with plus, minus and delete buttons, and a bill total
+Your cart stays saved even after you refresh the page
+Sign in and sign up
+Detect your location and fill the delivery form for you
+Small pop-up message when you add or remove an item
+Built with
+React and Vite
+Tailwind CSS
+React Router
+Context API
+Clerk (login)
+Swiper (banner slider)
+Axios
+React Toastify
+Lottie (the "No Products Found" animation)
+DummyJSON for product data
+How to run it
+Clone the project
+bash
+   git clone https://github.com/engribrahimorakzai/TechZone.git
+   cd TechZone
+Install the packages
+bash
+   npm install
+Create a file named .env in the main folder and add your Clerk key
+   VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key_here
 
-Currently, two official plugins are available:
+You can get a free key from clerk.com.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Start the app
+bash
+   npm run dev
 
-## React Compiler
+Then open http://localhost:5173 in your browser.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Folder overview
+src/
+  components/   small reusable parts (Navbar, ProductCard, Filter...)
+  context/      shared data (products and cart)
+  pages/        full pages (Home, Products, Cart...)
+  assets/       images and animations
+About me
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+I'm Ibrahim Khan. You can find me on GitHub: engribrahimorakzai
