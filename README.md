@@ -1,54 +1,99 @@
-TechZone
-TechZone is a small online store for electronics that I built with React. You can browse products, search and filter them, open a product page, and add items to your cart.
-I made this project to practice React and to learn how a real shopping site works.
+# TechZone – Electronics E-Commerce Website
 
-What it can do
-Home page with a sliding banner
-Browse products by category
-Search, and filter by category, brand and price
-Pagination (8 products per page)
-Product page with image gallery and quantity picker
-Cart with plus, minus and delete buttons, and a bill total
-Your cart stays saved even after you refresh the page
-Sign in and sign up
-Detect your location and fill the delivery form for you
-Small pop-up message when you add or remove an item
-Built with
-React and Vite
-Tailwind CSS
-React Router
-Context API
-Clerk (login)
-Swiper (banner slider)
-Axios
-React Toastify
-Lottie (the "No Products Found" animation)
-DummyJSON for product data
-How to run it
-Clone the project
-bash
-   git clone https://github.com/engribrahimorakzai/TechZone.git
-   cd TechZone
-Install the packages
-bash
-   npm install
-Create a file named .env in the main folder and add your Clerk key
-   VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key_here
+TechZone is a modern electronics e-commerce web application built with **React.js and Tailwind CSS**. It allows users to browse electronic products, search and filter items, view product details, and manage their shopping cart through a simple and responsive user interface.
 
-You can get a free key from clerk.com.
+This project was developed to practice React.js, reusable components, state management, routing, and real-world e-commerce functionality.
 
-Start the app
-bash
-   npm run dev
+##  Features
+- **Home Page:** Attractive homepage with a sliding banner.
+- **Product Categories:** Browse electronics by category.
+- **Product Search:** Search for products easily.
+- **Advanced Filtering:** Filter products by category, brand, and price.
+- **Pagination:** Display 8 products per page.
+- **Product Details:** View product information, image gallery, and select quantities.
+- **Shopping Cart:** Add, remove, and update product quantities.
+- **Cart Total:** Automatically calculate the total price of cart items.
+- **Persistent Cart:** Keep cart items saved after refreshing the page.
+- **Authentication:** Sign up and sign in using Clerk.
+- **Location Detection:** Detect the user's location.
+- **Delivery Form:** Provide delivery details for orders.
+- **Toast Notifications:** Display messages when products are added to or removed from the cart.
+- **Animations:** Smooth banner transitions and animations, including a “No Products Found” animation.
+- **Responsive Design:** A user-friendly layout for different screen sizes.
 
-Then open http://localhost:5173 in your browser.
+##  Technologies Used
 
-Folder overview
-src/
-  components/   small reusable parts (Navbar, ProductCard, Filter...)
-  context/      shared data (products and cart)
-  pages/        full pages (Home, Products, Cart...)
-  assets/       images and animations
-About me
+- **React.js** – Building the user interface
+- **Vite** – Development server and build tool
+- **Tailwind CSS** – Styling and responsive layouts
+- **React Router** – Page navigation
+- **Context API** – Shared product and cart state
+- **Clerk** – User authentication
+- **Swiper.js** – Banner slider
+- **Axios** – HTTP requests
+- **React Toastify** – Toast notifications
+- **Lottie** – Animations
+- **DummyJSON** – Sample product data
 
-I'm Ibrahim Khan. You can find me on GitHub: engribrahimorakzai
+## Getting Started
+Follow these steps to run TechZone locally.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/engribrahimorakzai/TechZone.git
+```
+### 2. Navigate to the Project Directory
+```bash
+cd TechZone
+```
+### 3. Install Dependencies
+```bash
+npm install
+```
+### 4. Configure Environment Variables
+Create a `.env` file in the root directory and add your Clerk publishable key:
+```env
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+```
+Get your Clerk publishable key from the [Clerk Dashboard](https://dashboard.clerk.com/).
+**Note:** Replace the placeholder with your actual key. Never commit secret keys or private credentials to GitHub.
+### 5. Start the Development Server
+```bash
+npm run dev
+```
+### 6. Open the Application
+Open the local URL displayed in your terminal, usually:
+```text
+http://localhost:5173
+```
+## 📁 Project Structure
+
+```text
+TechZone/
+├── public/
+├── src/
+│   ├── assets/       # Images and animation assets
+│   ├── components/   # Reusable UI components
+│   ├── context/      # Shared application state
+│   ├── pages/        # Application pages
+│   ├── App.jsx       # Main application component
+│   └── main.jsx      # Application entry point
+├── .env              # Environment variables
+├── package.json
+└── README.md
+```
+
+*Note: The folder structure above is a general overview. Adjust it to match the actual files in your repository.*
+
+## 🎯 Project Purpose
+
+TechZone was built as a hands-on project to improve my frontend development skills and understand how an e-commerce application works, including product browsing, filtering, authentication, cart management, and responsive UI development.
+
+## 👨‍💻 Author
+
+**Muhammad Ibrahim Orakzai**
+
+- GitHub: [@engribrahimorakzai](https://github.com/engribrahimorakzai)
+
+---
+
+If you find this project useful, feel free to explore the repository and share your feedback.
