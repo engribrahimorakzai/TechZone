@@ -1,3 +1,6 @@
+
+
+
 const getPages = (current, total) => {
   const pages = []
   if (total <= 5) {
@@ -13,14 +16,13 @@ const getPages = (current, total) => {
 }
 
 const Pagination = ({ page, pageHandler, dynamicPage }) => {
-  // only show pagination if there are more than 1 page
   if (dynamicPage <= 1) return null
 
   return (
-    <div className="mt-10 flex items-center justify-center gap-4">
+    <div className="mt-10 flex flex-wrap items-center justify-center gap-2 md:gap-4">
       <button
         disabled={page === 1}
-        className={`${page === 1 ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 cursor-pointer'} text-white px-3 py-1 rounded-md`}
+        className={`${page === 1 ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 cursor-pointer'} text-white text-sm md:text-base px-3 py-1 rounded-md`}
         onClick={() => pageHandler(page - 1)}
       >
         Prev
@@ -30,8 +32,9 @@ const Pagination = ({ page, pageHandler, dynamicPage }) => {
         <span
           key={index}
           onClick={() => typeof item === 'number' && pageHandler(item)}
-          className={`${typeof item === 'number' ? 'cursor-pointer' : ''} ${item === page ? 'font-bold text-red-600' : 'text-black'
-            }`}
+          className={`${typeof item === 'number' ? 'cursor-pointer' : ''} ${
+            item === page ? 'font-bold text-red-600' : 'text-black'
+          }`}
         >
           {item}
         </span>
@@ -39,7 +42,7 @@ const Pagination = ({ page, pageHandler, dynamicPage }) => {
 
       <button
         disabled={page === dynamicPage}
-        className={`${page === dynamicPage ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 cursor-pointer'} text-white px-3 py-1 rounded-md`}
+        className={`${page === dynamicPage ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 cursor-pointer'} text-white text-sm md:text-base px-3 py-1 rounded-md`}
         onClick={() => pageHandler(page + 1)}
       >
         Next

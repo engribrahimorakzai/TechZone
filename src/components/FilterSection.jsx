@@ -1,3 +1,5 @@
+
+
 import { getData } from '../context/DataContext'
 
 const FilterSection = ({
@@ -15,19 +17,19 @@ const FilterSection = ({
   const { categoryOnlyData, brandOnlyData } = getData()
 
   return (
-    <div className="bg-gray-100 mt-10 p-4 rounded-md h-max hidden md:block">
+    <div className="bg-gray-100 p-4 rounded-md h-max">
       <input
         type="text"
         placeholder="Search.."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="bg-white p-2 rounded-md border-gray-400 border-2"
+        className="bg-white p-2 rounded-md border-gray-400 border-2 w-full"
       />
 
       <h1 className="mt-5 font-semibold text-xl">Category</h1>
-      <div className="flex flex-col gap-2 mt-3">
+      <div className="flex flex-col gap-2 mt-3 max-h-60 overflow-y-auto">
         {categoryOnlyData?.map((item, index) => (
-          <div key={index} className="flex gap-2">
+          <label key={index} className="flex gap-2 items-center cursor-pointer uppercase text-sm">
             <input
               type="checkbox"
               name={item}
@@ -35,8 +37,8 @@ const FilterSection = ({
               value={item}
               onChange={handleCategoryChange}
             />
-            <button className="cursor-pointer uppercase">{item}</button>
-          </div>
+            {item}
+          </label>
         ))}
       </div>
 
@@ -64,7 +66,7 @@ const FilterSection = ({
           max="10000"
           value={priceRange[1]}
           onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-          className="transition-all"
+          className="w-full transition-all"
         />
       </div>
 

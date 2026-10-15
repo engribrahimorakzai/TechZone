@@ -36,7 +36,7 @@ const About = () => {
         </div>
 
         <div className="text-center mt-10">
-          <h3 className="text-xl font-semibold text-red-600 mb-2">Join the Zaptro Family</h3>
+          <h3 className="text-xl font-semibold text-red-600 mb-2">Join the TechZone Family</h3>
           <p className="text-gray-700 mb-4">
             Whether you’re a tech enthusiast, a professional, or just looking for something cool and functional — Zaptro has something for everyone.
           </p>

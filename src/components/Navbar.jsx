@@ -1,15 +1,16 @@
+
+
+import { useState } from 'react'
 import { MapPin } from 'lucide-react'
 import { FaCaretDown } from 'react-icons/fa'
 import { IoCartOutline } from 'react-icons/io5'
 import { CgClose } from 'react-icons/cg'
+import { HiMenuAlt1, HiMenuAlt3 } from 'react-icons/hi'
 import { Link, NavLink } from 'react-router-dom'
 import { SignInButton, SignUpButton, UserButton, useAuth } from '@clerk/react'
 import { useCart } from '../context/CartContext'
-import { HiMenuAlt1, HiMenuAlt3 } from 'react-icons/hi'
-import { useState } from 'react'
+import ResponsiveMenu from './ResponsiveMenu'
 
-
-// active link 
 const linkClass = ({ isActive }) =>
   isActive
     ? 'border-b-2 border-red-500 text-red-500 cursor-pointer transition-all'
@@ -23,22 +24,19 @@ const Navbar = ({ location, getLoction, openDropdown, setOpcenDropdown }) => {
   const toggleDropdown = () => setOpcenDropdown(!openDropdown)
 
   return (
-    <div className="bg-white py-3 shadow-xl px-4 md:px-0">
+    <div className="bg-white py-3 shadow-xl px-4">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
-        {/* Logo Section */}
-        <div className="flex items-center gap-7">
-          {/* Logo */}
+        {/* Logo + Location */}
+        <div className="flex items-center gap-4 xl:gap-7">
           <Link to="/">
-            <h1 className="font-bold text-3xl">
+            <h1 className="font-bold text-2xl md:text-3xl">
               <span className="text-red-500 font-serif">Tech</span>
               Zone
             </h1>
           </Link>
 
-          {/* Location */}
-          <div className=" md :flex gap-1 cursor-pointer text-gray-700 items-center hidden">
+          <div className="hidden xl:flex gap-1 cursor-pointer text-gray-700 items-center">
             <MapPin className="text-red-500" />
-
             <span className="font-semibold">
               {location ? (
                 <div className="-space-y-1 text-sm">
@@ -59,7 +57,7 @@ const Navbar = ({ location, getLoction, openDropdown, setOpcenDropdown }) => {
           </div>
 
           {openDropdown && (
-            <div className="w-62.5 h-max shadow-2xl z-50 bg-white fixed top-16 left-60 border-2 p-5 border-gray-100 rounded-md">
+            <div className="hidden xl:block w-62.5 h-max shadow-2xl z-50 bg-white fixed top-16 left-60 border-2 p-5 border-gray-100 rounded-md">
               <h1 className="font-semibold mb-4 text-xl flex justify-between">
                 Change location
                 <span onClick={toggleDropdown} className="cursor-pointer">
@@ -76,10 +74,9 @@ const Navbar = ({ location, getLoction, openDropdown, setOpcenDropdown }) => {
           )}
         </div>
 
-        {/* Right Section */}
-        <nav className="flex gap-7 items-center">
-          {/* Menu */}
-          <ul className="md:flex gap-7 items-center text-xl font-semibold hidden">
+        {/* Right section */}
+        <nav className="flex gap-4 md:gap-6 items-center">
+          <ul className="hidden lg:flex gap-6 items-center text-lg xl:text-xl font-semibold">
             <NavLink to="/" className={linkClass}>Home</NavLink>
             <NavLink to="/products" className={linkClass}>Products</NavLink>
             <NavLink to="/about" className={linkClass}>About</NavLink>
@@ -87,17 +84,14 @@ const Navbar = ({ location, getLoction, openDropdown, setOpcenDropdown }) => {
             <NavLink to="/cart" className={linkClass}>Cart</NavLink>
           </ul>
 
-          {/* Cart Icon */}
           <Link to="/cart" className="relative">
             <IoCartOutline className="h-7 w-7" />
-
             <span className="bg-red-500 px-2 rounded-full absolute -top-3 -right-3 text-white text-sm">
               {totalItems}
             </span>
           </Link>
 
-          {/* Clerk Authentication */}
-          <div className="flex items-center gap-4  hidden md:block ">
+          <div className="hidden lg:flex items-center gap-3">
             {!isSignedIn ? (
               <>
                 <SignInButton mode="modal">
@@ -105,7 +99,6 @@ const Navbar = ({ location, getLoction, openDropdown, setOpcenDropdown }) => {
                     Sign In
                   </button>
                 </SignInButton>
-
                 <SignUpButton mode="modal">
                   <button className="border border-red-500 text-red-500 px-4 py-2 rounded-md cursor-pointer hover:bg-red-500 hover:text-white transition">
                     Sign Up
@@ -116,11 +109,22 @@ const Navbar = ({ location, getLoction, openDropdown, setOpcenDropdown }) => {
               <UserButton />
             )}
           </div>
-          {
-            openNav?<HiMenuAlt3  onClick={()=>setOpenNav(false)} className='h-7 w-7 md:hidden'/>:<HiMenuAlt1 onClick={()=>setOpenNav(true)} className='h-7 w-7 md:hidden'/>
-          }
+
+          {openNav ? (
+            <HiMenuAlt3
+              onClick={() => setOpenNav(false)}
+              className="h-7 w-7 lg:hidden cursor-pointer"
+            />
+          ) : (
+            <HiMenuAlt1
+              onClick={() => setOpenNav(true)}
+              className="h-7 w-7 lg:hidden cursor-pointer"
+            />
+          )}
         </nav>
       </div>
+
+      <ResponsiveMenu openNav={openNav} setOpenNav={setOpenNav} />
     </div>
   )
 }
