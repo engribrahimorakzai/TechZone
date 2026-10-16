@@ -1,5 +1,4 @@
-
-
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const getPages = (current, total) => {
   const pages = []
@@ -19,35 +18,61 @@ const Pagination = ({ page, pageHandler, dynamicPage }) => {
   if (dynamicPage <= 1) return null
 
   return (
-    <div className="mt-10 flex flex-wrap items-center justify-center gap-2 md:gap-4">
+    <nav className="mt-12 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2" aria-label="Pagination">
+      {/* Previous Button */}
       <button
         disabled={page === 1}
-        className={`${page === 1 ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 cursor-pointer'} text-white text-sm md:text-base px-3 py-1 rounded-md`}
         onClick={() => pageHandler(page - 1)}
+        className={`inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition border ${
+          page === 1
+            ? 'border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-600 bg-slate-50 dark:bg-slate-900 cursor-not-allowed'
+            : 'border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 cursor-pointer shadow-xs'
+        }`}
       >
-        Prev
+        <ChevronLeft className="w-4 h-4" /> Prev
       </button>
 
-      {getPages(page, dynamicPage).map((item, index) => (
-        <span
-          key={index}
-          onClick={() => typeof item === 'number' && pageHandler(item)}
-          className={`${typeof item === 'number' ? 'cursor-pointer' : ''} ${
-            item === page ? 'font-bold text-red-600' : 'text-black'
-          }`}
-        >
-          {item}
-        </span>
-      ))}
+      {/* Numbered Pages */}
+      <div className="flex items-center gap-1">
+        {getPages(page, dynamicPage).map((item, index) => {
+          if (item === '...') {
+            return (
+              <span key={index} className="px-2 py-1 text-xs sm:text-sm text-slate-400 dark:text-slate-500 font-bold select-none">
+                ...
+              </span>
+            )
+          }
 
+          const isActive = item === page
+          return (
+            <button
+              key={index}
+              onClick={() => pageHandler(item)}
+              className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center transition cursor-pointer ${
+                isActive
+                  ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/30'
+                  : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+              }`}
+            >
+              {item}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Next Button */}
       <button
         disabled={page === dynamicPage}
-        className={`${page === dynamicPage ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 cursor-pointer'} text-white text-sm md:text-base px-3 py-1 rounded-md`}
         onClick={() => pageHandler(page + 1)}
+        className={`inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition border ${
+          page === dynamicPage
+            ? 'border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-600 bg-slate-50 dark:bg-slate-900 cursor-not-allowed'
+            : 'border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 cursor-pointer shadow-xs'
+        }`}
       >
-        Next
+        Next <ChevronRight className="w-4 h-4" />
       </button>
-    </div>
+    </nav>
   )
 }
 

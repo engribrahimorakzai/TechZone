@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 import Navbar from './components/Navbar'
@@ -13,12 +13,26 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Cart from './pages/Cart'
 
+// Auto-scroll to top on route change
+const ScrollToTop = () => {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
 const App = () => {
-  const [location, setLocation] = useState()
+  const [location, setLocation] = useState(null)
   const [openDropdown, setOpcenDropdown] = useState(false)
 
   const getLoction = () => {
     setOpcenDropdown(false)
+
+    if (!navigator.geolocation) {
+      console.log('Geolocation is not supported by this browser.')
+      return
+    }
 
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
@@ -28,11 +42,11 @@ const App = () => {
           const res = await axios.get(url)
           setLocation(res.data.address)
         } catch (error) {
-          console.log(error)
+          console.error('Failed to reverse geocode location:', error)
         }
       },
       (err) => {
-        console.log('Location error:', err.message)
+        console.warn('Location permission denied or unavailable:', err.message)
       }
     )
   }
@@ -43,27 +57,32 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Navbar
-        location={location}
-        getLoction={getLoction}
-        openDropdown={openDropdown}
-        setOpcenDropdown={setOpcenDropdown}
-      />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<SingleProduct />} />
-        <Route path="/category/:category" element={<CategoryProducts />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route
-          path="/cart"
-          element={<Cart location={location} getLocation={getLoction} />}
+      <ScrollToTop />
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased font-sans transition-colors duration-200">
+        <Navbar
+          location={location}
+          getLoction={getLoction}
+          openDropdown={openDropdown}
+          setOpcenDropdown={setOpcenDropdown}
         />
-      </Routes>
 
-      <Footer />
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<SingleProduct />} />
+            <Route path="/category/:category" element={<CategoryProducts />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route
+              path="/cart"
+              element={<Cart location={location} getLocation={getLoction} />}
+            />
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
     </BrowserRouter>
   )
 }

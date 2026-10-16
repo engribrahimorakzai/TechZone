@@ -1,35 +1,7 @@
-// import { createContext, useContext, useState } from 'react'
-
-// const CartContext = createContext(null)
-
-// export const CartProvider = ({ children }) => {
-//   const [cartItem, setCartItem] = useState([])
-
-//   const addToCart = (product) => {
-//     const exists = cartItem.find((item) => item.id === product.id)
-//     if (exists) {
-//       setCartItem(
-//         cartItem.map((item) =>
-//           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-//         )
-//       )
-//     } else {
-//       setCartItem([...cartItem, { ...product, quantity: 1 }])
-//     }
-//   }
-
-//   return (
-//     <CartContext.Provider value={{ cartItem, addToCart }}>
-//       {children}
-//     </CartContext.Provider>
-//   )
-// }
-
-// export const useCart = () => useContext(CartContext)
 
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+import { toast, Bounce } from 'react-toastify'
 
 const CartContext = createContext(null)
 
@@ -61,7 +33,17 @@ export const CartProvider = ({ children }) => {
     })
 
     // toast notification
-    toast.success('Product added to cart')
+    toast(' Product added to cart', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+    })
   }
 
   const updateQuantity = (id, quantity) => {
@@ -73,7 +55,17 @@ export const CartProvider = ({ children }) => {
 
   const deleteItem = (id) => {
     setCartItem((prev) => prev.filter((item) => item.id !== id))
-    toast.error('Product removed from cart')
+    toast(' Product removed from cart', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+    })
   }
 
   const clearCart = () => setCartItem([])

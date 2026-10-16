@@ -1,5 +1,4 @@
-
-import { IoCartOutline } from 'react-icons/io5'
+import { ShoppingBag, Star, Check } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 
@@ -7,26 +6,82 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate()
   const { addToCart } = useCart()
 
+  const discount = Math.round(product.discountPercentage || 0)
+  const originalPrice = discount > 0 ? Math.round(product.price / (1 - discount / 100)) : null
+  const rating = product.rating ? Number(product.rating).toFixed(1) : '4.8'
+
+  const goToDetails = () => navigate(`/products/${product.id}`)
+
   return (
-    <div className="border relative border-gray-100 rounded-2xl cursor-pointer hover:scale-105 hover:shadow-2xl transition-all p-2 h-max">
-      <img
-        src={product.thumbnail}
-        alt={product.title}
-        className="bg-gray-100 aspect-square object-contain w-full"
-        onClick={() => navigate(`/products/${product.id}`)}
-      />
-      <h1 className="line-clamp-2 p-1 font-semibold text-sm md:text-base">
-        {product.title}
-      </h1>
-      <p className="my-1 text-base md:text-lg text-gray-800 font-bold">
-        ${product.price}
-      </p>
-      <button
-        onClick={() => addToCart(product)}
-        className="bg-red-500 px-2 md:px-3 py-2 text-sm md:text-lg rounded-md text-white w-full cursor-pointer flex gap-1 md:gap-2 items-center justify-center font-semibold"
-      >
-        <IoCartOutline className="w-5 h-5 md:w-6 md:h-6" /> Add to Cart
-      </button>
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs hover:shadow-xl hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+      {/* Top Image Preview Area */}
+      <div className="relative aspect-square bg-slate-50/60 dark:bg-slate-800/40 p-4 flex items-center justify-center overflow-hidden cursor-pointer" onClick={goToDetails}>
+        {/* Discount Badge */}
+        {discount > 0 && (
+          <span className="absolute top-3 left-3 z-10 bg-rose-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow-xs">
+            -{discount}%
+          </span>
+        )}
+
+        {/* Rating Pill */}
+        <div className="absolute top-3 right-3 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur-xs text-slate-700 dark:text-slate-200 text-xs font-semibold px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 border border-slate-100 dark:border-slate-700">
+          <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+          <span>{rating}</span>
+        </div>
+
+        {/* Product Thumbnail */}
+        <img
+          src={product.thumbnail}
+          alt={product.title}
+          className="w-full h-full object-contain filter drop-shadow-xs group-hover:scale-108 transition-transform duration-300"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Product Details Section */}
+      <div className="p-4 flex flex-col flex-1 justify-between gap-3">
+        <div>
+          {/* Brand & Category */}
+          <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1 truncate">
+            {product.brand || product.category?.replaceAll('-', ' ') || 'Electronics'}
+          </div>
+
+          {/* Product Title */}
+          <h3
+            onClick={goToDetails}
+            className="font-bold text-sm sm:text-base text-slate-900 dark:text-white line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer leading-snug"
+            title={product.title}
+          >
+            {product.title}
+          </h3>
+        </div>
+
+        {/* Price & Stock info */}
+        <div>
+          <div className="flex items-baseline gap-2 mb-1.5">
+            <span className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">
+              PKR {product.price}
+            </span>
+            {originalPrice && (
+              <span className="text-xs text-slate-600 dark:text-slate-400 line-through">
+                PKR {originalPrice}
+              </span>
+            )}
+          </div>
+
+          <div className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mb-3">
+            <Check className="w-3 h-3" /> In Stock &bull; Free Shipping
+          </div>
+
+          {/* Add to Cart CTA */}
+          <button
+            onClick={() => addToCart(product)}
+            className="w-full py-2.5 px-3 bg-slate-900 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 shadow-xs cursor-pointer active:scale-98"
+          >
+            <ShoppingBag className="w-4 h-4" /> Add to Cart
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

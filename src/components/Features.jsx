@@ -1,30 +1,53 @@
-import React from 'react'
-import { Truck, Lock, RotateCcw, Clock } from 'lucide-react'
+import { Truck, ShieldCheck, RefreshCw, Headphones } from 'lucide-react'
 
 const features = [
-  { icon: Truck, text: 'Free Shipping', subtext: 'On orders over $100' },
-  { icon: Lock, text: 'Secure Payment', subtext: '100% protected payments' },
-  { icon: RotateCcw, text: 'Easy Returns', subtext: '30-day return policy' },
-  { icon: Clock, text: '24/7 Support', subtext: 'Dedicated customer service' },
+  {
+    icon: Truck,
+    text: 'Free Express Shipping',
+    subtext: 'Free delivery on all tech orders over PKR 5,000',
+  },
+  {
+    icon: ShieldCheck,
+    text: '2-Year Official Warranty',
+    subtext: '100% genuine guaranteed products',
+  },
+  {
+    icon: RefreshCw,
+    text: '30-Day Hassle-Free Returns',
+    subtext: 'Quick refunds and easy replacement',
+  },
+  {
+    icon: Headphones,
+    text: '24/7 Tech Expert Support',
+    subtext: 'Dedicated technical assistance anytime',
+  },
 ]
-const Features = () => {
 
+const Features = () => {
   return (
-    <div className='bg-gray-100 py-8 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-7xl mx-auto'>
-        <div className='grid grid-cols-1 gap-y-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-8'>
+    <section className="py-10 bg-slate-50 dark:bg-slate-950 border-y border-slate-200/80 dark:border-slate-800 transition-colors duration-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => {
-            return <div key={index} className='flex items-center justify-center text-center sm:text-left'>
-              <feature.icon className='flex-shrink-0 h-10 w-10 text-gray-600' aria-hidden="true" />
-              <div className='ml-4'>
-                <p className='text-base font-medium text-gray-900'>{feature.text}</p>
-                <p className='mt-1 text-sm text-gray-500'>{feature.subtext}</p>
+            const Icon = feature.icon
+            return (
+              <div
+                key={index}
+                className="flex items-center gap-4 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-blue-200 dark:hover:border-blue-800 transition group"
+              >
+                <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white">{feature.text}</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{feature.subtext}</p>
+                </div>
               </div>
-            </div>
+            )
           })}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

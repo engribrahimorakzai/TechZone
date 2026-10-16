@@ -1,28 +1,3 @@
-// import { createContext, useState } from 'react'
-// import axios from 'axios'
-
-// export const DataContext = createContext(null)
-
-// export const DataProvider = ({ children }) => {
-//   const [data, setData] = useState([]) // shuru mein empty array, undefined nahi
-
-//   // fetching ALL products
-//   const fetchAllProducts = async () => {
-//     try {
-//       const res = await axios.get('https://dummyjson.com/products?limit=150')
-//       setData(res.data.products)
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
-
-//   return (
-//     <DataContext.Provider value={{ data, setData, fetchAllProducts }}>
-//       {children}
-//     </DataContext.Provider>
-//   )
-// }
-
 
 
 import { createContext, useContext, useEffect, useState } from 'react'
