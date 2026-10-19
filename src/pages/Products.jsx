@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { LayoutGrid, List, SlidersHorizontal, Package } from 'lucide-react'
 import { getData } from '../context/DataContext'
 import FilterSection from '../components/FilterSection'
@@ -12,13 +13,22 @@ const ITEMS_PER_PAGE = 8
 
 const Products = () => {
   const { data, loading } = getData()
-  const [search, setSearch] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [search, setSearch] = useState(() => searchParams.get('search') || '')
   const [category, setCategory] = useState('All')
   const [brand, setBrand] = useState('All')
   const [priceRange, setPriceRange] = useState([0, 10000])
   const [page, setPage] = useState(1)
   const [showFilters, setShowFilters] = useState(false)
   const [viewMode, setViewMode] = useState('grid') // 'grid' | 'list'
+
+  // Update search state if URL search param changes
+  useEffect(() => {
+    const query = searchParams.get('search')
+    if (query !== null) {
+      setSearch(query)
+    }
+  }, [searchParams])
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.checked ? e.target.value : 'All')
@@ -79,11 +89,10 @@ const Products = () => {
             <div className="flex items-center bg-white dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-1.5 rounded-lg transition cursor-pointer ${
-                  viewMode === 'grid'
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
-                }`}
+                className={`p-1.5 rounded-lg transition cursor-pointer ${viewMode === 'grid'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+                  }`}
                 title="Grid View"
                 aria-label="Grid View"
               >
@@ -91,11 +100,10 @@ const Products = () => {
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-1.5 rounded-lg transition cursor-pointer ${
-                  viewMode === 'list'
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
-                }`}
+                className={`p-1.5 rounded-lg transition cursor-pointer ${viewMode === 'list'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+                  }`}
                 title="List View"
                 aria-label="List View"
               >
@@ -109,9 +117,8 @@ const Products = () => {
         <div className="flex flex-col md:flex-row gap-8 items-start">
           {/* Sidebar Filter */}
           <div
-            className={`${
-              showFilters ? 'block' : 'hidden'
-            } md:block w-full md:w-72 shrink-0 md:sticky md:top-24`}
+            className={`${showFilters ? 'block' : 'hidden'
+              } md:block w-full md:w-72 shrink-0 md:sticky md:top-24`}
           >
             <FilterSection
               search={search}

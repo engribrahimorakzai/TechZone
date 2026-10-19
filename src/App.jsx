@@ -1,8 +1,6 @@
-
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import axios from 'axios'
-
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -12,6 +10,9 @@ import CategoryProducts from './pages/CategoryProducts'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Cart from './pages/Cart'
+import Wishlist from './pages/Wishlist'
+import NotFound from './pages/NotFound'
+// import ChatBot from './components/ChatBot'
 
 // Auto-scroll to top on route change
 const ScrollToTop = () => {
@@ -74,15 +75,18 @@ const App = () => {
             <Route path="/category/:category" element={<CategoryProducts />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/wishlist" element={<Wishlist />} />
             <Route
               path="/cart"
               element={<Cart location={location} getLocation={getLoction} />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
 
         <Footer />
       </div>
+      {/* <ChatBot /> */}
     </BrowserRouter>
   )
 }

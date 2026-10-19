@@ -9,14 +9,17 @@ import {
   RotateCcw,
   Minus,
   Plus,
+  Heart,
 } from 'lucide-react'
 import Breadcrums from '../components/Breadcrums'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 
 const SingleProduct = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addToCart } = useCart()
+  const { isInWishlist, toggleWishlist } = useWishlist()
   const [product, setProduct] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [activeImage, setActiveImage] = useState('')
@@ -75,6 +78,23 @@ const SingleProduct = () => {
                     SAVE {discount}%
                   </span>
                 )}
+                {/* Wishlist Button */}
+                <button
+                  onClick={() => toggleWishlist(product)}
+                  className={`absolute top-4 right-4 z-10 w-10 h-10 rounded-full flex items-center justify-center transition shadow-xs cursor-pointer active:scale-90 ${
+                    isInWishlist(product.id)
+                      ? 'bg-rose-50 dark:bg-rose-950/80 text-rose-500 border border-rose-200 dark:border-rose-900'
+                      : 'bg-white/90 dark:bg-slate-800/90 text-slate-400 hover:text-rose-500 hover:bg-rose-50/80 dark:hover:bg-rose-950/40 border border-slate-200 dark:border-slate-700'
+                  }`}
+                  title={isInWishlist(product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                  aria-label="Wishlist toggle"
+                >
+                  <Heart
+                    className={`w-5 h-5 transition-transform duration-200 ${
+                      isInWishlist(product.id) ? 'fill-rose-500 text-rose-500 scale-110' : ''
+                    }`}
+                  />
+                </button>
                 <img
                   src={activeImage}
                   alt={product.title}
@@ -91,11 +111,10 @@ const SingleProduct = () => {
                       <button
                         key={index}
                         onClick={() => setActiveImage(img)}
-                        className={`w-18 h-18 sm:w-20 sm:h-20 shrink-0 rounded-xl p-2 bg-slate-50 dark:bg-slate-800 border-2 transition-all cursor-pointer flex items-center justify-center ${
-                          isActive
-                            ? 'border-blue-600 ring-2 ring-blue-500/20'
-                            : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 opacity-70 hover:opacity-100'
-                        }`}
+                        className={`w-18 h-18 sm:w-20 sm:h-20 shrink-0 rounded-xl p-2 bg-slate-50 dark:bg-slate-800 border-2 transition-all cursor-pointer flex items-center justify-center ${isActive
+                          ? 'border-blue-600 ring-2 ring-blue-500/20'
+                          : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 opacity-70 hover:opacity-100'
+                          }`}
                       >
                         <img
                           src={img}
@@ -197,18 +216,39 @@ const SingleProduct = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
+                <div className="space-y-3 pt-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button
+                      onClick={() => addToCart(product, quantity)}
+                      className="w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-2xl shadow-md shadow-blue-500/20 hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                    >
+                      <ShoppingBag className="w-4 h-4" /> Add to Cart
+                    </button>
+                    <button
+                      onClick={handleBuyNow}
+                      className="w-full py-3.5 px-6 bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-sm font-bold rounded-2xl shadow-xs transition flex items-center justify-center gap-2 cursor-pointer active:scale-98 border border-transparent dark:border-slate-700"
+                    >
+                      Buy Now
+                    </button>
+                  </div>
                   <button
-                    onClick={() => addToCart(product, quantity)}
-                    className="w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-2xl shadow-md shadow-blue-500/20 hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                    onClick={() => toggleWishlist(product)}
+                    className={`w-full py-3 px-6 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer border ${
+                      isInWishlist(product.id)
+                        ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800 shadow-xs'
+                        : 'bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50/50 dark:hover:bg-rose-950/20 border-slate-200 dark:border-slate-700'
+                    }`}
                   >
-                    <ShoppingBag className="w-4 h-4" /> Add to Cart
-                  </button>
-                  <button
-                    onClick={handleBuyNow}
-                    className="w-full py-3.5 px-6 bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-sm font-bold rounded-2xl shadow-xs transition flex items-center justify-center gap-2 cursor-pointer active:scale-98 border border-transparent dark:border-slate-700"
-                  >
-                    Buy Now
+                    <Heart
+                      className={`w-4 h-4 transition-transform duration-200 ${
+                        isInWishlist(product.id) ? 'fill-rose-500 text-rose-500 scale-110' : ''
+                      }`}
+                    />
+                    <span>
+                      {isInWishlist(product.id)
+                        ? 'Saved in Wishlist (Click to remove)'
+                        : 'Save to Wishlist'}
+                    </span>
                   </button>
                 </div>
               </div>

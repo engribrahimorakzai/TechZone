@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useUser } from '@clerk/react'
+import lottie from 'lottie-web'
 import {
   Trash2,
   Minus,
   Plus,
-  ShoppingBag,
   ArrowRight,
   MapPin,
   ShieldCheck,
@@ -13,8 +13,27 @@ import {
   CheckCircle2,
 } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import notFound from '../assets/notfound.json'
 
 const HANDLING_CHARGE = 5
+
+// Chhota Lottie player (isi file ke andar)
+const LottiePlayer = ({ animationData, loop = true }) => {
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    const anim = lottie.loadAnimation({
+      container: containerRef.current,
+      renderer: 'svg',
+      loop,
+      autoplay: true,
+      animationData,
+    })
+    return () => anim.destroy()
+  }, [animationData, loop])
+
+  return <div ref={containerRef} className="w-full h-full" />
+}
 
 const Cart = ({ location, getLocation }) => {
   const { cartItem, updateQuantity, deleteItem, totalPrice } = useCart()
@@ -61,8 +80,8 @@ const Cart = ({ location, getLocation }) => {
   if (cartItem.length === 0) {
     return (
       <div className="min-h-[70vh] bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center px-4 py-16 text-center transition-colors duration-200">
-        <div className="w-24 h-24 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-6">
-          <ShoppingBag className="w-12 h-12" />
+        <div className="w-56 h-56 sm:w-72 sm:h-72 mb-4">
+          <LottiePlayer animationData={notFound} loop={true} />
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           Your Shopping Cart is Empty

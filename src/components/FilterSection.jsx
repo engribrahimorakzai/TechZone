@@ -71,11 +71,10 @@ const FilterSection = ({
             return (
               <label
                 key={index}
-                className={`flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition capitalize ${
-                  isSelected
+                className={`flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition capitalize ${isSelected
                     ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 font-semibold'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
-                }`}
+                  }`}
               >
                 <input
                   type="checkbox"

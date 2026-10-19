@@ -1,11 +1,14 @@
-import { ShoppingBag, Star, Check } from 'lucide-react'
+import { ShoppingBag, Star, Check, Heart } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate()
   const { addToCart } = useCart()
+  const { isInWishlist, toggleWishlist } = useWishlist()
 
+  const isFavorited = isInWishlist(product.id)
   const discount = Math.round(product.discountPercentage || 0)
   const originalPrice = discount > 0 ? Math.round(product.price / (1 - discount / 100)) : null
   const rating = product.rating ? Number(product.rating).toFixed(1) : '4.8'
@@ -23,8 +26,29 @@ const ProductCard = ({ product }) => {
           </span>
         )}
 
+        {/* Wishlist Heart Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleWishlist(product)
+          }}
+          className={`absolute top-2.5 right-2.5 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs active:scale-90 ${
+            isFavorited
+              ? 'bg-rose-50 dark:bg-rose-950/80 text-rose-500 border border-rose-200 dark:border-rose-900'
+              : 'bg-white/90 dark:bg-slate-800/90 text-slate-400 hover:text-rose-500 hover:bg-rose-50/80 dark:hover:bg-rose-950/40 border border-slate-200/80 dark:border-slate-700'
+          }`}
+          title={isFavorited ? 'Remove from Wishlist' : 'Add to Wishlist'}
+          aria-label="Wishlist toggle"
+        >
+          <Heart
+            className={`w-4 h-4 transition-transform duration-200 ${
+              isFavorited ? 'fill-rose-500 text-rose-500 scale-110' : ''
+            }`}
+          />
+        </button>
+
         {/* Rating Pill */}
-        <div className="absolute top-3 right-3 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur-xs text-slate-700 dark:text-slate-200 text-xs font-semibold px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 border border-slate-100 dark:border-slate-700">
+        <div className="absolute bottom-2.5 right-2.5 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur-xs text-slate-700 dark:text-slate-200 text-xs font-semibold px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 border border-slate-100 dark:border-slate-700">
           <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
           <span>{rating}</span>
         </div>

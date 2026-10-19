@@ -34,10 +34,11 @@ export const CartProvider = ({ children }) => {
 
     // toast notification
     toast(' Product added to cart', {
+      toastId: `cart-add-${product.id}`,
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
-      closeOnClick: false,
+      closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
@@ -56,10 +57,11 @@ export const CartProvider = ({ children }) => {
   const deleteItem = (id) => {
     setCartItem((prev) => prev.filter((item) => item.id !== id))
     toast(' Product removed from cart', {
+      toastId: `cart-remove-${id}`,
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
-      closeOnClick: false,
+      closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,

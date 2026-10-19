@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import { ShoppingBag, Star, Truck } from 'lucide-react'
+import { ShoppingBag, Star, Truck, Heart } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 
 const getDate = (daysAhead) => {
   const d = new Date()
@@ -15,7 +16,9 @@ const getDate = (daysAhead) => {
 const ProductListView = ({ product }) => {
   const navigate = useNavigate()
   const { addToCart } = useCart()
+  const { isInWishlist, toggleWishlist } = useWishlist()
 
+  const isFavorited = isInWishlist(product.id)
   const discount = Math.round(product.discountPercentage || 0)
   const originalPrice = discount > 0 ? Math.round(product.price / (1 - discount / 100)) : null
   const rating = product.rating ? Number(product.rating).toFixed(1) : '4.8'
@@ -34,6 +37,28 @@ const ProductListView = ({ product }) => {
               -{discount}%
             </span>
           )}
+
+          {/* Wishlist Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleWishlist(product)
+            }}
+            className={`absolute top-2 right-2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs active:scale-90 ${
+              isFavorited
+                ? 'bg-rose-50 dark:bg-rose-950/80 text-rose-500 border border-rose-200 dark:border-rose-900'
+                : 'bg-white/90 dark:bg-slate-800/90 text-slate-400 hover:text-rose-500 hover:bg-rose-50/80 dark:hover:bg-rose-950/40 border border-slate-200/80 dark:border-slate-700'
+            }`}
+            title={isFavorited ? 'Remove from Wishlist' : 'Add to Wishlist'}
+            aria-label="Wishlist toggle"
+          >
+            <Heart
+              className={`w-4 h-4 transition-transform duration-200 ${
+                isFavorited ? 'fill-rose-500 text-rose-500 scale-110' : ''
+              }`}
+            />
+          </button>
+
           <img
             src={product.thumbnail}
             alt={product.title}
