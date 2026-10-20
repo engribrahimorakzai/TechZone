@@ -12,7 +12,7 @@ import Contact from './pages/Contact'
 import Cart from './pages/Cart'
 import Wishlist from './pages/Wishlist'
 import NotFound from './pages/NotFound'
-// import ChatBot from './components/ChatBot'
+import ChatBot from './components/ChatBot'
 
 // Auto-scroll to top on route change
 const ScrollToTop = () => {
@@ -86,7 +86,7 @@ const App = () => {
 
         <Footer />
       </div>
-      {/* <ChatBot /> */}
+      <ChatBot />
     </BrowserRouter>
   )
 }
